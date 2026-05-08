@@ -1,116 +1,251 @@
-# 📘 Caso de Estudio: Sistema de Colocación de Créditos Mivivienda
+# 📘 Caso de Estudio: Sistema de Información para Colocaciones de Créditos Mivivienda
 
 ## 🏦 1. Contexto del negocio
 
-En el Perú, el acceso a vivienda formal es promovido por el Estado a través del Fondo MIVIVIENDA S.A., el cual facilita el financiamiento de viviendas mediante entidades financieras (bancos, cajas municipales, financieras).
+En el Perú, el acceso a vivienda formal es promovido mediante programas de financiamiento hipotecario administrados por el Fondo MIVIVIENDA S.A., los cuales permiten a distintas entidades financieras ofrecer productos orientados a la adquisición de viviendas.
 
-Las entidades financieras actúan como intermediarios, evaluando a los clientes interesados en adquirir un crédito hipotecario bajo este programa. Estas colocaciones implican un proceso estructurado que incluye:
+Con el objetivo de fomentar la transparencia y acceso a la información, diversas instituciones publican datasets abiertos relacionados con las colocaciones de créditos Mivivienda. Estos datasets contienen información agregada y operacional sobre:
 
-- Evaluación crediticia del cliente  
-- Validación de requisitos del programa Mivivienda  
-- Registro de la propiedad a adquirir  
-- Aprobación y desembolso del crédito  
-- Seguimiento del estado del crédito  
+- Créditos desembolsados
+- Entidades financieras participantes
+- Productos crediticios
+- Ubicación geográfica de las viviendas
+- Montos, tasas y plazos de financiamiento
 
-Actualmente, una entidad financiera desea desarrollar un sistema que permita **gestionar de manera integral el proceso de colocación de créditos Mivivienda**, debido a problemas como:
+Sin embargo, estos datos suelen encontrarse en estructuras planas y desnormalizadas, orientadas principalmente al análisis estadístico y consulta pública, mas no al modelamiento de un sistema transaccional bancario.
 
-- Información dispersa en múltiples sistemas o archivos  
-- Dificultad para hacer seguimiento al estado de las solicitudes  
-- Inconsistencias en los datos de clientes y propiedades  
-- Falta de trazabilidad en el proceso de aprobación  
+Ante esta situación, una entidad académica desea desarrollar un proyecto de modelamiento de datos que permita transformar esta información en un modelo conceptual, lógico y físico más cercano al funcionamiento real de un sistema de gestión de créditos hipotecarios.
 
----
+El propósito del proyecto es diseñar un sistema capaz de representar de manera estructurada el proceso de colocación de créditos Mivivienda, incorporando no solo la información disponible en el dataset abierto, sino también entidades y procesos adicionales propios del negocio bancario, tales como:
 
-## 🎯 2. Objetivos del sistema
+- Clientes
+- Solicitudes de crédito
+- Evaluaciones crediticias
+- Créditos hipotecarios
+- Cronogramas de pago
+- Seguimiento de operaciones
 
-El sistema tendrá como objetivos:
+De esta manera, el proyecto combinará:
 
-- Centralizar la información de clientes, solicitudes y propiedades  
-- Gestionar el ciclo completo de colocación de créditos  
-- Controlar el estado de cada solicitud (evaluación, aprobación, rechazo, desembolso)  
-- Facilitar la evaluación crediticia  
-- Mantener trazabilidad de las operaciones  
-- Permitir consultas y reportes para la toma de decisiones  
-
----
-
-## 👥 3. Actores involucrados
-
-| Actor                | Descripción |
-|---------------------|------------|
-| Cliente             | Persona natural que solicita un crédito |
-| Asesor de crédito   | Registra y gestiona la solicitud |
-| Analista de riesgos | Evalúa la capacidad de pago |
-| Entidad financiera  | Institución que otorga el crédito |
-| Fondo Mivivienda    | Regula el programa |
-| Notaría             | Formaliza la compra |
-| Registro Público    | Inscribe la propiedad |
+- Datos reales provenientes de fuentes abiertas del Perú
+- Expansión académica del dominio bancario
+- Aplicación de técnicas de modelamiento conceptual y relacional
 
 ---
 
-## 🔄 4. Procesos principales del negocio
+# 🎯 2. Objetivos del sistema
 
-### 4.1 Registro de cliente
-- El cliente proporciona sus datos personales y financieros  
-- Se valida si ya existe en el sistema  
+El sistema tendrá como objetivos principales:
 
-### 4.2 Registro de solicitud de crédito
-- Se registra una solicitud asociada a un cliente  
-- Se define monto, tipo de vivienda y valor del inmueble  
-
-### 4.3 Evaluación crediticia
-- Se analizan ingresos, deudas e historial crediticio  
-- Se asigna una calificación de riesgo  
-
-### 4.4 Evaluación de la propiedad
-- Se registran datos como ubicación, valor y tipo  
-
-### 4.5 Aprobación o rechazo
-- Estados posibles:
-  - Aprobado  
-  - Rechazado  
-  - En observación  
-
-### 4.6 Desembolso del crédito
-- Se genera el crédito  
-- Se crea el cronograma de pagos  
-- Se realiza el desembolso  
-
-### 4.7 Seguimiento del crédito
-- Estados del crédito:
-  - Vigente  
-  - Moroso  
-  - Cancelado  
+- Centralizar la información relacionada con colocaciones de créditos Mivivienda
+- Gestionar el ciclo de vida de las solicitudes de crédito
+- Registrar información de clientes, propiedades y entidades financieras
+- Modelar la evaluación y aprobación de créditos hipotecarios
+- Administrar créditos desembolsados y cronogramas de pago
+- Permitir consultas y análisis sobre montos colocados, tasas y distribución geográfica
+- Transformar información desnormalizada en un modelo relacional estructurado
 
 ---
 
-## 📏 5. Reglas de negocio
+# 👥 3. Actores involucrados
 
-- Un cliente puede tener múltiples solicitudes  
-- Cada solicitud pertenece a un único cliente  
-- Una solicitud está asociada a una sola propiedad  
-- El monto del crédito no puede exceder un porcentaje del valor del inmueble  
-- El cliente debe cumplir requisitos del programa  
-- Toda solicitud debe pasar por evaluación crediticia  
-- Un crédito solo se genera si la solicitud es aprobada  
-- Todo crédito tiene un cronograma de pagos  
-- Se debe mantener historial de estados de la solicitud  
+| Actor | Descripción |
+|---|---|
+| Cliente | Persona natural que solicita un crédito hipotecario |
+| Asesor de crédito | Registra solicitudes y orienta al cliente |
+| Analista de riesgos | Evalúa capacidad de pago y riesgo crediticio |
+| Entidad financiera | Institución que otorga el crédito |
+| Fondo Mivivienda | Programa que regula los productos hipotecarios |
+| Sistema de información | Plataforma encargada de gestionar los procesos y datos |
+| Usuario analista | Usuario que consulta reportes e indicadores |
 
 ---
 
-## 📌 6. Alcance del sistema
+# 🔄 4. Procesos principales del negocio
 
-### Incluye:
-- Gestión de clientes  
-- Registro y seguimiento de solicitudes  
-- Evaluación crediticia  
-- Gestión de propiedades  
-- Generación de créditos  
-- Cronogramas de pago  
-- Reportes básicos  
+## 4.1 Registro de clientes
 
-### No incluye:
-- Integración con centrales de riesgo  
-- Procesos legales completos  
-- Pagos en línea  
-- Sistemas contables  
+El sistema almacena información personal y financiera de los clientes interesados en solicitar un crédito hipotecario.
+
+---
+
+## 4.2 Registro de solicitudes de crédito
+
+El asesor financiero registra la solicitud del cliente indicando:
+
+- Tipo de producto Mivivienda
+- Monto solicitado
+- Valor de la vivienda
+- Ubicación del inmueble
+- Entidad financiera participante
+
+---
+
+## 4.3 Evaluación crediticia
+
+El analista de riesgos revisa:
+
+- Ingresos del cliente
+- Nivel de endeudamiento
+- Historial crediticio
+- Capacidad de pago
+
+Como resultado, la solicitud puede ser:
+
+- Aprobada
+- Rechazada
+- Observada
+
+---
+
+## 4.4 Gestión de propiedades
+
+El sistema registra información de las viviendas asociadas al crédito:
+
+- Departamento
+- Provincia
+- Distrito
+- Código UBIGEO
+- Valor del inmueble
+
+---
+
+## 4.5 Generación del crédito
+
+Si la solicitud es aprobada:
+
+- Se genera el crédito hipotecario
+- Se registra la tasa de interés
+- Se define el plazo del financiamiento
+- Se registra la fecha de desembolso
+
+---
+
+## 4.6 Gestión del cronograma de pagos
+
+El sistema administra:
+
+- Cuotas mensuales
+- Fechas de vencimiento
+- Estado de pago
+- Seguimiento del crédito
+
+---
+
+## 4.7 Consultas y análisis
+
+Los usuarios pueden realizar consultas relacionadas con:
+
+- Créditos colocados por departamento
+- Distribución por entidad financiera
+- Montos desembolsados
+- Tasas promedio
+- Productos más utilizados
+
+---
+
+# 📏 5. Reglas de negocio
+
+- Un cliente puede registrar múltiples solicitudes de crédito
+- Cada solicitud pertenece a un único cliente
+- Una solicitud debe estar asociada a una propiedad
+- Una propiedad pertenece a una única ubicación geográfica
+- Un crédito solo puede generarse si la solicitud es aprobada
+- Cada crédito pertenece a una entidad financiera
+- Todo crédito debe tener un cronograma de pagos
+- Los productos crediticios deben estar regulados por el programa Mivivienda
+- El monto del crédito no debe superar el valor de la vivienda
+- Toda ubicación debe estar identificada mediante código UBIGEO
+
+---
+
+# 📌 6. Alcance del sistema
+
+## Incluye:
+
+- Gestión de clientes
+- Gestión de solicitudes de crédito
+- Evaluación crediticia
+- Gestión de propiedades
+- Gestión de entidades financieras
+- Administración de créditos hipotecarios
+- Registro de cronogramas y cuotas
+- Consultas y reportes analíticos
+- Modelamiento de datos basado en información real
+
+---
+
+## No incluye:
+
+- Integración con centrales de riesgo
+- Validaciones biométricas
+- Pagos en línea
+- Gestión contable bancaria
+- Procesos notariales completos
+
+---
+
+# 🧩 7. Consideraciones sobre la fuente de datos
+
+El proyecto toma como referencia un dataset público de colocaciones de créditos Mivivienda proveniente de plataformas de datos abiertos del Perú.
+
+Dicho dataset contiene información relevante como:
+
+- Fecha de desembolso
+- Producto financiero
+- Departamento, provincia y distrito
+- Código UBIGEO
+- Entidad financiera
+- Tipo de IFI
+- Monto del crédito
+- Tasa de interés
+- Plazo
+- Valor de vivienda
+
+Sin embargo, debido a que la fuente original posee una estructura desnormalizada y orientada al análisis estadístico, será necesario realizar un proceso de abstracción y modelamiento para transformarla en un sistema relacional estructurado.
+
+Por ello, el modelo conceptual incluirá entidades adicionales no presentes explícitamente en el dataset original, tales como:
+
+- Cliente
+- Solicitud de crédito
+- Evaluación crediticia
+- Cronograma de pagos
+- Cuotas
+
+Estas entidades permitirán representar de manera más completa el funcionamiento del negocio bancario.
+
+---
+
+# 🧠 8. Evolución hacia el modelo conceptual
+
+A partir del caso de estudio, se podrán identificar entidades como:
+
+- Cliente
+- SolicitudCredito
+- EvaluacionCrediticia
+- Credito
+- Propiedad
+- Ubicacion
+- EntidadFinanciera
+- ProductoCredito
+- CronogramaPago
+- Cuota
+- Asesor
+- Analista
+
+Así como relaciones entre ellas para la construcción del Diagrama Entidad-Relación (DER).
+
+---
+
+# 🗄️ 9. Evolución hacia el modelo lógico
+
+Posteriormente, el modelo conceptual será transformado a un modelo lógico relacional mediante:
+
+- Definición de tablas
+- Claves primarias y foráneas
+- Normalización
+- Restricciones de integridad
+- Tipos de datos
+- Implementación SQL
+
+Esto permitirá construir una base de datos estructurada y alineada con el contexto de negocio planteado.
