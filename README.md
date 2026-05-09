@@ -144,21 +144,6 @@ Los usuarios pueden realizar consultas relacionadas con:
 
 ---
 
-# 📏 5. Reglas de negocio
-
-- Un cliente puede registrar múltiples solicitudes de crédito
-- Cada solicitud pertenece a un único cliente
-- Una solicitud debe estar asociada a una propiedad
-- Una propiedad pertenece a una única ubicación geográfica
-- Un crédito solo puede generarse si la solicitud es aprobada
-- Cada crédito pertenece a una entidad financiera
-- Todo crédito debe tener un cronograma de pagos
-- Los productos crediticios deben estar regulados por el programa Mivivienda
-- El monto del crédito no debe superar el valor de la vivienda
-- Toda ubicación debe estar identificada mediante código UBIGEO
-
----
-
 # 📌 6. Alcance del sistema
 
 ## Incluye:
@@ -213,39 +198,3 @@ Por ello, el modelo conceptual incluirá entidades adicionales no presentes expl
 - Cuotas
 
 Estas entidades permitirán representar de manera más completa el funcionamiento del negocio bancario.
-
----
-
-# 🧠 8. Evolución hacia el modelo conceptual
-
-A partir del caso de estudio, se podrán identificar entidades como:
-
-- Cliente
-- SolicitudCredito
-- EvaluacionCrediticia
-- Credito
-- Propiedad
-- Ubicacion
-- EntidadFinanciera
-- ProductoCredito
-- CronogramaPago
-- Cuota
-- Asesor
-- Analista
-
-Así como relaciones entre ellas para la construcción del Diagrama Entidad-Relación (DER).
-
----
-
-# 🗄️ 9. Evolución hacia el modelo lógico
-
-Posteriormente, el modelo conceptual será transformado a un modelo lógico relacional mediante:
-
-- Definición de tablas
-- Claves primarias y foráneas
-- Normalización
-- Restricciones de integridad
-- Tipos de datos
-- Implementación SQL
-
-Esto permitirá construir una base de datos estructurada y alineada con el contexto de negocio planteado.
