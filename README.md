@@ -1,35 +1,19 @@
 # 📘 Caso de Estudio: Sistema de Información para Colocaciones de Créditos Mivivienda
 
-## 🏦 1. Contexto del negocio
+## 🏦 1. Descripción del Proyecto
 
-En el Perú, el acceso a vivienda formal es promovido mediante programas de financiamiento hipotecario administrados por el Fondo MIVIVIENDA S.A., los cuales permiten a distintas entidades financieras ofrecer productos orientados a la adquisición de viviendas.
+Este proyecto tiene como objetivo diseñar un sistema OLTP (Online Transaction Processing) orientado a la gestión de colocaciones de créditos hipotecarios Mivivienda dentro de una entidad financiera.
 
-Con el objetivo de fomentar la transparencia y acceso a la información, diversas instituciones publican datasets abiertos relacionados con las colocaciones de créditos Mivivienda. Estos datasets contienen información agregada y operacional sobre:
+El sistema busca representar de manera estructurada los principales procesos operativos relacionados con:
 
-- Créditos desembolsados
-- Entidades financieras participantes
-- Productos crediticios
-- Ubicación geográfica de las viviendas
-- Montos, tasas y plazos de financiamiento
+- Registro de clientes
+- Solicitudes de crédito hipotecario
+- Evaluación crediticia
+- Gestión de propiedades
+- Desembolso de créditos
+- Administración de cronogramas y cuotas
 
-Sin embargo, estos datos suelen encontrarse en estructuras planas y desnormalizadas, orientadas principalmente al análisis estadístico y consulta pública, mas no al modelamiento de un sistema transaccional bancario.
-
-Ante esta situación, una entidad académica desea desarrollar un proyecto de modelamiento de datos que permita transformar esta información en un modelo conceptual, lógico y físico más cercano al funcionamiento real de un sistema de gestión de créditos hipotecarios.
-
-El propósito del proyecto es diseñar un sistema capaz de representar de manera estructurada el proceso de colocación de créditos Mivivienda, incorporando no solo la información disponible en el dataset abierto, sino también entidades y procesos adicionales propios del negocio bancario, tales como:
-
-- Clientes
-- Solicitudes de crédito
-- Evaluaciones crediticias
-- Créditos hipotecarios
-- Cronogramas de pago
-- Seguimiento de operaciones
-
-De esta manera, el proyecto combinará:
-
-- Datos reales provenientes de fuentes abiertas del Perú
-- Expansión académica del dominio bancario
-- Aplicación de técnicas de modelamiento conceptual y relacional
+El proyecto toma como referencia información real proveniente de datasets públicos de colocaciones de créditos Mivivienda del Perú, complementando dicha información con una expansión académica del dominio bancario para fines de modelamiento conceptual, lógico y físico.
 
 ---
 
@@ -39,7 +23,7 @@ El sistema tendrá como objetivos principales:
 
 - Centralizar la información relacionada con colocaciones de créditos Mivivienda
 - Gestionar el ciclo de vida de las solicitudes de crédito
-- Registrar información de clientes, propiedades y entidades financieras
+- Registrar información de clientes y propiedades
 - Modelar la evaluación y aprobación de créditos hipotecarios
 - Administrar créditos desembolsados y cronogramas de pago
 - Permitir consultas y análisis sobre montos colocados, tasas y distribución geográfica
@@ -54,93 +38,40 @@ El sistema tendrá como objetivos principales:
 | Cliente | Persona natural que solicita un crédito hipotecario |
 | Asesor de crédito | Registra solicitudes y orienta al cliente |
 | Analista de riesgos | Evalúa capacidad de pago y riesgo crediticio |
-| Entidad financiera | Institución que otorga el crédito |
+| Supervisor | Supervisa y valida operaciones |
 | Fondo Mivivienda | Programa que regula los productos hipotecarios |
-| Sistema de información | Plataforma encargada de gestionar los procesos y datos |
 | Usuario analista | Usuario que consulta reportes e indicadores |
 
 ---
 
-# 🔄 4. Procesos principales del negocio
+# 🏠 4. Productos Financieros Considerados
 
-## 4.1 Registro de clientes
+El sistema contempla productos hipotecarios asociados al programa Mivivienda:
 
-El sistema almacena información personal y financiera de los clientes interesados en solicitar un crédito hipotecario.
-
----
-
-## 4.2 Registro de solicitudes de crédito
-
-El asesor financiero registra la solicitud del cliente indicando:
-
-- Tipo de producto Mivivienda
-- Monto solicitado
-- Valor de la vivienda
-- Ubicación del inmueble
-- Entidad financiera participante
+| Código | Producto |
+|---|---|
+| NCMV | Nuevo Crédito MIVIVIENDA |
+| FCTP | Financiamiento Complementario Techo Propio |
+| S-CRC | Servicio de Cobertura de Riesgo Crediticio |
+| MT | Mi Terreno |
 
 ---
 
-## 4.3 Evaluación crediticia
+# 🧠 5. Contexto del Negocio
 
-El analista de riesgos revisa:
+En el Perú, las entidades financieras ofrecen productos hipotecarios asociados al programa Mivivienda para facilitar la adquisición de viviendas.
 
-- Ingresos del cliente
-- Nivel de endeudamiento
-- Historial crediticio
-- Capacidad de pago
+Cuando un cliente desea adquirir una vivienda mediante financiamiento hipotecario, la entidad financiera realiza un proceso que incluye:
 
-Como resultado, la solicitud puede ser:
+1. Registro del cliente
+2. Registro de la solicitud de crédito
+3. Evaluación crediticia
+4. Validación de la propiedad
+5. Aprobación o rechazo de la solicitud
+6. Generación y desembolso del crédito
+7. Administración del cronograma de pagos
 
-- Aprobada
-- Rechazada
-- Observada
-
----
-
-## 4.4 Gestión de propiedades
-
-El sistema registra información de las viviendas asociadas al crédito:
-
-- Departamento
-- Provincia
-- Distrito
-- Código UBIGEO
-- Valor del inmueble
-
----
-
-## 4.5 Generación del crédito
-
-Si la solicitud es aprobada:
-
-- Se genera el crédito hipotecario
-- Se registra la tasa de interés
-- Se define el plazo del financiamiento
-- Se registra la fecha de desembolso
-
----
-
-## 4.6 Gestión del cronograma de pagos
-
-El sistema administra:
-
-- Cuotas mensuales
-- Fechas de vencimiento
-- Estado de pago
-- Seguimiento del crédito
-
----
-
-## 4.7 Consultas y análisis
-
-Los usuarios pueden realizar consultas relacionadas con:
-
-- Créditos colocados por departamento
-- Distribución por entidad financiera
-- Montos desembolsados
-- Tasas promedio
-- Productos más utilizados
+El sistema propuesto modela dichos procesos mediante un enfoque OLTP, orientado al registro y gestión operativa de las transacciones del negocio.
 
 ---
 
@@ -152,21 +83,10 @@ Los usuarios pueden realizar consultas relacionadas con:
 - Gestión de solicitudes de crédito
 - Evaluación crediticia
 - Gestión de propiedades
-- Gestión de entidades financieras
 - Administración de créditos hipotecarios
 - Registro de cronogramas y cuotas
 - Consultas y reportes analíticos
 - Modelamiento de datos basado en información real
-
----
-
-## No incluye:
-
-- Integración con centrales de riesgo
-- Validaciones biométricas
-- Pagos en línea
-- Gestión contable bancaria
-- Procesos notariales completos
 
 ---
 
