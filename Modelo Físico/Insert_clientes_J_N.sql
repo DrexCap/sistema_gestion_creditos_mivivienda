@@ -171,6 +171,108 @@ VALUES
 
 GO
 
+INSERT INTO personas_juridicas
+(
+ruc,
+razon_social,
+nombre_comercial,
+tipo_empresa,
+representante_legal,
+sector_economico,
+direccion,
+ubigeo,
+telefono,
+correo,
+fecha_constitucion,
+estado_empresa,
+inicio_actividades,
+numero_empleados,
+cliente_id
+)
+VALUES
+
+('20612345671',
+'Logística Integral del Perú SAC',
+'LogiPerú',
+'SAC',
+'Miguel Ángel Paredes Rojas',
+'Transporte y Logística',
+'Av. Argentina 1450',
+'150101',
+'014589321',
+'contacto@logiperu.com',
+'2016-03-15',
+'Activo',
+'2016-04-01',
+85,
+16),
+
+('20612345672',
+'Manufacturas del Norte SA',
+'ManuNorte',
+'SA',
+'Jorge Alberto Villanueva Díaz',
+'Manufactura',
+'Jr. Los Álamos 340',
+'150102',
+'014589322',
+'ventas@manunorte.com',
+'2011-08-20',
+'Activo',
+'2011-09-15',
+210,
+17),
+
+('20612345673',
+'Exportaciones Marinas SRL',
+'ExpoMar',
+'SRL',
+'Andrea Lucía Cáceres Silva',
+'Pesca y Exportación',
+'Av. Costanera 785',
+'150103',
+'014589323',
+'info@expomar.com',
+'2019-01-10',
+'Activo',
+'2019-02-01',
+60,
+18),
+
+('20612345674',
+'Soluciones Financieras Integrales EIRL',
+'SFI',
+'EIRL',
+'Fernando Enrique Gutiérrez Campos',
+'Consultoría Financiera',
+'Av. Javier Prado 1100',
+'150104',
+'014589324',
+'contacto@sfi.com',
+'2014-06-05',
+'Activo',
+'2014-07-01',
+18,
+19),
+
+('20612345675',
+'Grupo Empresarial Andino SAA',
+'GEA',
+'SAA',
+'Patricia Elena Valdivia Romero',
+'Holding Empresarial',
+'Av. República de Panamá 2450',
+'150105',
+'014589325',
+'gerencia@gea.com',
+'2008-10-25',
+'Activo',
+'2009-01-01',
+450,
+20);
+
+GO
+
 -----------------------------------------
 -- CLIENTES (10 Naturales + 10 Jurídicos)
 -----------------------------------------

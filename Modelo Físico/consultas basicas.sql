@@ -57,6 +57,9 @@ FROM personas_juridicas pj INNER JOIN clientes c
 ON pj.cliente_id=c.id AND c.tipo_cliente='J'
 ORDER BY 2 DESC;
 
+
+select * from personas_juridicas;
+
 SELECT c.id,
 CASE 
 WHEN pj.razon_social IS NULL 
@@ -64,8 +67,8 @@ WHEN pj.razon_social IS NULL
 ELSE pj.razon_social END AS 'cliente',
 c.tipo_cliente
 FROM clientes c
-LEFT JOIN personas_naturales nt ON nt.cliente_id=c.id AND c.tipo_cliente='N'
-LEFT JOIN personas_juridicas pj ON pj.cliente_id=c.id AND c.tipo_cliente='J'
+LEFT JOIN personas_naturales nt ON nt.cliente_id=c.id 
+LEFT JOIN personas_juridicas pj ON pj.cliente_id=c.id 
 ORDER BY 2 DESC;
 
 SELECT * FROM clientes WHERE id IN (36,26,16);
