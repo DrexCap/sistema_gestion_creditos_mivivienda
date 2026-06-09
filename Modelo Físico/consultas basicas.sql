@@ -2,6 +2,8 @@
 USE bd_sistema_creditos_mivivienda;
 GO
 
+-- EJEMPLOS DE LA BD DEL PROFESOR
+
 --Mostrar todos los clientes naturales con sus nombres completos y situación laboral.
 SELECT
 CONCAT(nt.apellido_paterno,' ', nt.apellido_paterno, ' ', nt.nombres) AS 'nombre_completo',

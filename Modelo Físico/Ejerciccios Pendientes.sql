@@ -1129,3 +1129,412 @@ ORDER BY
         ELSE 3
     END,
     ec.score_riesgo;
+
+
+/*
+EJERCICIO V03 - BÁSICO
+Enunciado
+
+Crear una vista que muestre todas las cuentas junto con:
+
+Número cuenta
+Moneda
+Saldo
+Tipo cuenta
+
+*/
+
+CREATE VIEW vw_cuentas AS
+SELECT
+    nro_cuenta AS 'Número Cuenta',
+    moneda AS 'Moneda',
+    saldo AS 'Saldo',
+    tipo_cuenta AS 'Tipo Cuenta'
+FROM cuentas;
+GO
+
+SELECT * FROM vw_cuentas;
+
+/*
+EJERCICIO V04 - INTERMEDIO
+Enunciado
+
+Crear una vista que muestre todas las solicitudes.
+*/
+
+CREATE VIEW vw_solicitudes AS
+SELECT
+    sc.codigo_solicitud AS 'Código Solicitud',
+    sc.fecha_solicitud AS 'Fecha Solicitud',
+
+    CASE
+        WHEN pj.razon_social IS NULL
+            THEN CONCAT(
+                nt.apellido_paterno,' ',
+                nt.apellido_materno,' ',
+                nt.nombres
+            )
+        ELSE pj.razon_social
+    END AS 'Cliente',
+
+    pc.nombre AS 'Producto Crediticio',
+    sc.monto_solicitado AS 'Monto Solicitado',
+    sc.estado AS 'Estado'
+
+FROM solicitud_crediticia sc
+
+INNER JOIN clientes c
+    ON c.id = sc.cliente_id
+
+INNER JOIN productos_crediticios pc
+    ON pc.id = sc.producto_crediticio_id
+
+LEFT JOIN personas_naturales nt
+    ON nt.cliente_id = c.id
+
+LEFT JOIN personas_juridicas pj
+    ON pj.cliente_id = c.id;
+GO
+
+SELECT * FROM vw_solicitudes;
+
+
+/*
+EJERCICIO V05 - INTERMEDIO
+Enunciado
+
+Crear una vista que muestre las evaluaciones crediticias.
+*/
+
+CREATE VIEW vw_evaluaciones_crediticias AS
+SELECT
+
+    CASE
+        WHEN pj.razon_social IS NULL
+            THEN CONCAT(
+                nt.apellido_paterno,' ',
+                nt.apellido_materno,' ',
+                nt.nombres
+            )
+        ELSE pj.razon_social
+    END AS 'Cliente',
+
+    ec.score_riesgo AS 'Score Riesgo',
+    ec.nivel_endeudamiento AS 'Nivel Endeudamiento',
+    ec.ingresos_mensuales AS 'Ingresos Mensuales',
+    ec.resultado AS 'Resultado Evaluación'
+
+FROM evaluaciones_crediticias ec
+
+INNER JOIN solicitud_crediticia sc
+    ON sc.id = ec.solicitud_crediticia_id
+
+INNER JOIN clientes c
+    ON c.id = sc.cliente_id
+
+LEFT JOIN personas_naturales nt
+    ON nt.cliente_id = c.id
+
+LEFT JOIN personas_juridicas pj
+    ON pj.cliente_id = c.id;
+GO
+
+SELECT * FROM vw_evaluaciones_crediticias;
+
+/*
+EJERCICIO V06 - INTERMEDIO
+Enunciado
+
+Crear una vista denominada:
+Mostrar únicamente créditos vigentes.
+*/
+CREATE VIEW vw_creditos_vigentes AS
+SELECT
+    numero_credito AS 'Número Crédito',
+    monto AS 'Monto',
+    plazo_meses AS 'Plazo',
+    tea AS 'TEA',
+    tcea AS 'TCEA',
+    saldo_credito AS 'Saldo',
+    fecha_desembolso AS 'Fecha Desembolso'
+FROM creditos
+WHERE estado = 'VIGENTE';
+GO
+
+SELECT * FROM vw_creditos_vigentes;
+
+/*
+EJERCICIO V07 - AVANZADO
+Enunciado
+
+Crear una vista de cartera crediticia.
+*/
+CREATE VIEW vw_cartera_crediticia AS
+SELECT
+
+    cr.numero_credito AS 'Número Crédito',
+
+    CASE
+        WHEN pj.razon_social IS NULL
+            THEN CONCAT(
+                nt.apellido_paterno,' ',
+                nt.apellido_materno,' ',
+                nt.nombres
+            )
+        ELSE pj.razon_social
+    END AS 'Cliente',
+
+    pc.nombre AS 'Producto',
+
+    cr.monto AS 'Monto',
+    cr.saldo_credito AS 'Saldo Crédito',
+    cr.estado AS 'Estado'
+
+FROM creditos cr
+
+INNER JOIN solicitud_crediticia sc
+    ON sc.id = cr.solicitud_crediticia_id
+
+INNER JOIN productos_crediticios pc
+    ON pc.id = sc.producto_crediticio_id
+
+INNER JOIN clientes c
+    ON c.id = sc.cliente_id
+
+LEFT JOIN personas_naturales nt
+    ON nt.cliente_id = c.id
+
+LEFT JOIN personas_juridicas pj
+    ON pj.cliente_id = c.id;
+GO
+
+SELECT * FROM vw_cartera_crediticia;
+
+/*
+EJERCICIO V08 - AVANZADO
+Enunciado
+
+Crear una vista de cuotas pendientes.
+*/
+
+CREATE VIEW vw_cuotas_pendientes AS
+SELECT
+
+    cr.numero_credito AS 'Crédito',
+
+    cu.nro_cuota AS 'Número Cuota',
+
+    cu.fecha_vencimiento AS 'Fecha Vencimiento',
+
+    cu.total_cuota AS 'Total Cuota',
+
+    cu.saldo_cuota AS 'Saldo Pendiente'
+
+FROM cuotas cu
+
+INNER JOIN cronogramas cg
+    ON cg.id = cu.cronograma_id
+
+INNER JOIN creditos cr
+    ON cr.id = cg.credito_id
+
+WHERE cu.estado = 'PENDIENTE';
+GO
+
+SELECT * FROM vw_cuotas_pendientes;
+
+/*
+EJERCICIO V10 - EXPERTO
+Enunciado
+
+Crear una vista de riesgo crediticio.
+
+Clasificar clientes:
+
+Riesgo Bajo
+Riesgo Medio
+Riesgo Alto
+
+según score_riesgo.
+*/
+
+CREATE VIEW vw_riesgo_crediticio AS
+SELECT
+
+    CASE
+        WHEN pj.razon_social IS NULL
+            THEN CONCAT(
+                nt.apellido_paterno,' ',
+                nt.apellido_materno,' ',
+                nt.nombres
+            )
+        ELSE pj.razon_social
+    END AS 'Cliente',
+
+    ec.score_riesgo AS 'Score Riesgo',
+
+    CASE
+        WHEN ec.score_riesgo >= 700
+            THEN 'Riesgo Bajo'
+
+        WHEN ec.score_riesgo >= 500
+            THEN 'Riesgo Medio'
+
+        ELSE 'Riesgo Alto'
+    END AS 'Clasificación'
+
+FROM evaluaciones_crediticias ec
+
+INNER JOIN solicitud_crediticia sc
+    ON sc.id = ec.solicitud_crediticia_id
+
+INNER JOIN clientes c
+    ON c.id = sc.cliente_id
+
+LEFT JOIN personas_naturales nt
+    ON nt.cliente_id = c.id
+
+LEFT JOIN personas_juridicas pj
+    ON pj.cliente_id = c.id;
+GO
+
+SELECT * FROM vw_riesgo_crediticio;
+
+
+/*
+-----------------------------------------------------------
+EJERCICIO F02 - BÁSICO
+-----------------------------------------------------------
+
+Crear una función que reciba:
+
+@monto
+
+Y retorne:
+
+IGV incluido.
+*/
+CREATE FUNCTION fn_igv_incluido (@monto DECIMAL(18,2))
+RETURNS DECIMAL(18,2)
+AS
+BEGIN
+    RETURN ( @monto * 1.18 );
+END;
+GO
+
+SELECT dbo.fn_igv_incluido(1000) AS 'Monto con IGV';
+
+/*
+-----------------------------------------------------------
+EJERCICIO F04 - INTERMEDIO
+-----------------------------------------------------------
+
+Crear una función que reciba:
+
+@saldo_credito
+
+Y retorne:
+
+Clasificación:
+
+- Normal
+- Observado
+- Crítico
+*/
+CREATE FUNCTION fn_clasificar_credito
+(
+    @saldo_credito DECIMAL(18,2)
+)
+RETURNS VARCHAR(20)
+AS
+BEGIN
+
+    RETURN
+    (
+        CASE
+            WHEN @saldo_credito < 50000
+                THEN 'Normal'
+
+            WHEN @saldo_credito < 150000
+                THEN 'Observado'
+
+            ELSE 'Critico'
+        END
+    );
+
+END;
+GO
+
+SELECT dbo.fn_clasificar_credito(30000) AS 'Clasificacion';
+
+/*
+-----------------------------------------------------------
+EJERCICIO F05 - INTERMEDIO
+-----------------------------------------------------------
+
+Crear una función que reciba:
+
+@ingresos
+@deudas
+
+Y retorne:
+
+Porcentaje de endeudamiento.
+*/
+
+CREATE FUNCTION fn_porcentaje_endeudamiento
+(
+    @ingresos DECIMAL(18,2),
+    @deudas DECIMAL(18,2)
+)
+RETURNS DECIMAL(10,2)
+AS
+BEGIN
+
+    RETURN
+    (
+        (@deudas * 100.0) / @ingresos
+    );
+
+END;
+GO
+
+SELECT dbo.fn_porcentaje_endeudamiento ( 5000, 1500 ) AS 'Porcentaje Endeudamiento';
+
+/*
+-----------------------------------------------------------
+EJERCICIO F06 - INTERMEDIO
+-----------------------------------------------------------
+
+Crear una función que reciba:
+
+@capital
+@intereses
+@seguros
+
+Y retorne:
+
+Total cuota.
+*/
+
+CREATE FUNCTION fn_total_cuota
+(
+    @capital DECIMAL(18,2),
+    @intereses DECIMAL(18,2),
+    @seguros DECIMAL(18,2)
+)
+RETURNS DECIMAL(18,2)
+AS
+BEGIN
+
+    RETURN
+    (
+        @capital +
+        @intereses +
+        @seguros
+    );
+
+END;
+GO
+
+SELECT dbo.fn_total_cuota ( 1200, 180, 45 ) AS 'Total Cuota';

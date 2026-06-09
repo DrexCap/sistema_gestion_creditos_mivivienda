@@ -2,6 +2,7 @@
 USE bd_sistema_creditos_mivivienda;
 GO
 
+-- EJEMPLOS DE LA BD DEL PROFESOR
 --Contar cuántos clientes existen por tipo de cliente.
 SELECT
 	CASE WHEN tipo_cliente = 'J' 
