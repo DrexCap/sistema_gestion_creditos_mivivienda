@@ -1,0 +1,21 @@
+cliente,edad
+Rivera Vergaray Kevin,30
+Pérez Gómez Juan,36
+Torres Rojas María,38
+Ramírez Soto Luis,31
+Fernández Ruiz Ana,34
+Mendoza Flores Carlos,39
+Salazar Vega Lucía,28
+Castro León Pedro,35
+Delgado Morales Sofía,30
+Navarro Ortiz Miguel,41
+Herrera Silva Valeria,33
+Cruz Romero Daniela,29
+Silva Mendoza Jorge,37
+Ríos Castro Patricia,34
+Vargas León Fernando,45
+Navarro Flores Camila,27
+Morales Reyes Eduardo,40
+Paredes Luna Rosa,32
+Campos Rojas José,43
+Torres Silva Carolina,35
